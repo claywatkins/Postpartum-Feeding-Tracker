@@ -12,15 +12,17 @@ import SwiftData
 class FeedingRecord {
     var date: Date
     var timeNursed: Date
-    var side: String
     var timeLeft: Date?
     var timeRight: Date?
+    var oz: Float?
+    var wasBottleFed: Bool
     
-    init(date: Date, timeNursed: Date, side: String, timeLeft: Date? = nil, timeRight: Date? = nil) {
+    init(date: Date, timeNursed: Date, timeLeft: Date? = nil, timeRight: Date? = nil, oz: Float? = nil, wasBottleFed: Bool) {
         self.date = date
         self.timeNursed = timeNursed
-        self.side = side
         self.timeLeft = timeLeft
         self.timeRight = timeRight
+        self.oz = oz
+        self.wasBottleFed = wasBottleFed
     }
 }
