@@ -10,6 +10,10 @@ import SwiftUI
 struct FeedingTimer: View {
     @State private var isTimerRunning: Bool = false
     @State private var progressTime = 0
+    
+    var size: CGFloat
+    var circleWidth: Double
+    
     var minutes: Int {
         (progressTime % 3600) / 60
     }
@@ -21,12 +25,31 @@ struct FeedingTimer: View {
     
     var body: some View {
         ZStack {
+            Circle() // background
+                .stroke(
+                    Color.pink.opacity(0.3),
+                    lineWidth: circleWidth
+                )
+                .frame(width: size)
+            
+            Circle() // progress layer
+                .trim(from: 0, to: progress())
+                .stroke(
+                    Color.pink,
+                    style: StrokeStyle(
+                        lineWidth: circleWidth,
+                        lineCap: .round
+                        )
+                )
+                .rotationEffect(.degrees(-90))
+                .frame(width: size)
+            
             VStack {
-                HStack {
-                    StopwatchUnit(timeUnit: minutes, timeUnitText: "MIN", color: .black)
+                HStack(spacing: 2) {
+                    StopwatchUnit(timeUnit: minutes, color: .black)
                     Text(":")
-                        .offset(y: -10)
-                    StopwatchUnit(timeUnit: seconds, timeUnitText: "SEC", color: .black)
+                        .offset(y: -2)
+                    StopwatchUnit(timeUnit: seconds, color: .black)
                 }
                 .onTapGesture {
                     if isTimerRunning {
@@ -41,8 +64,22 @@ struct FeedingTimer: View {
             }
         }
     }
+    
+    func progress() -> CGFloat {
+            return (CGFloat(seconds) / CGFloat(60))
+        }
 }
 
 #Preview {
-    FeedingTimer()
+    HStack(spacing: 50) {
+        VStack {
+            Text("Left")
+            FeedingTimer(size: 120, circleWidth: 12)
+            
+        }
+        VStack {
+            Text("Right")
+            FeedingTimer(size: 120, circleWidth: 12)
+        }
+    }
 }
