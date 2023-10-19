@@ -13,10 +13,14 @@ class FeedingRecord {
     var date: Date
     var timeNursed: Date
     var side: String
+    var timeLeft: Date?
+    var timeRight: Date?
     
-    init(date: Date, timeNursed: Date, side: String) {
+    init(date: Date, timeNursed: Date, side: String, timeLeft: Date? = nil, timeRight: Date? = nil) {
         self.date = date
         self.timeNursed = timeNursed
         self.side = side
+        self.timeLeft = timeLeft
+        self.timeRight = timeRight
     }
 }
