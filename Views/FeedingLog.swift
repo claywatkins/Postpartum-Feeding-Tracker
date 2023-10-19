@@ -8,8 +8,31 @@
 import SwiftUI
 
 struct FeedingLog: View {
+    
+    var feedingLog: [FeedingRecord] = []
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List {
+                ForEach(feedingLog, id: \.self) { feedingRecord in
+                    HStack {
+                        Text("")
+                    }
+                }
+            }
+            .navigationTitle("Feeding Log")
+            .navigationBarTitleDisplayMode(.large)
+            .overlay {
+                if feedingLog.isEmpty {
+                    ContentUnavailableView {
+                        Label("No Feeding Records", systemImage: "list.bullet.rectangle.portrait")
+                    
+                    } description: {
+                        Text("Start tracking feedings to see records here")
+                    }
+                }
+            }
+        }
     }
 }
 
