@@ -7,40 +7,45 @@
 
 import SwiftUI
 
-struct Feeding_Record_Cell: View {
+struct FeedingRecordCell: View {
     
     var feedingRecord: FeedingRecord
     
     var body: some View {
-        HStack(alignment: .firstTextBaseline) {
+        HStack(spacing: 12) {
             Image(systemName: feedingRecord.wasBottleFed ? "waterbottle.fill" : "heart.fill")
-            if feedingRecord.wasBottleFed {
-                if let oz = feedingRecord.oz {
-                    Text("Ammount Fed: \(oz)")
+            
+            HStack(alignment: .firstTextBaseline) {
+                if feedingRecord.wasBottleFed {
+                    if let oz = feedingRecord.oz {
+                        Text("Oz fed: \(oz, specifier: "%.1f")")
+                            .font(.subheadline)
+                    }
+
+                } else {
+                    VStack(alignment: .leading) {
+                        if let left = feedingRecord.timeLeft {
+                            Text("Left: \(feedingRecord.date...left)")
+                                .font(.subheadline)
+                        }
+                        if let right = feedingRecord.timeRight {
+                            Text("Right: \(feedingRecord.date...right)")
+                                .font(.subheadline)
+                        }
+                    }
                 }
-                Text("Bottle Fed")
-            } else {
-                Text("Breast Fed")
-                VStack(alignment: .leading) {
-                    if let left = feedingRecord.timeLeft {
-                        Text("Left: \(feedingRecord.date...left)")
-                            .lineLimit(0)
-                            .minimumScaleFactor(0.6)
-                    }
-                    if let right = feedingRecord.timeRight {
-                        Text("Right: \(feedingRecord.date...right)")
-                            .lineLimit(0)
-                            .minimumScaleFactor(0.6)
-                    }
+                Spacer()
+                VStack {
+                    Text("Time Nursed:")
+                        .font(.subheadline)
+                    Text("\(feedingRecord.date...feedingRecord.timeNursed)")
+                        .font(.subheadline)
                 }
             }
-            Spacer()
-            Text("Time Nursed: \(feedingRecord.date...feedingRecord.timeNursed)")
         }
-        .padding(.horizontal)
     }
 }
 
 #Preview {
-    Feeding_Record_Cell(feedingRecord: FeedingRecord(date: .now, timeNursed: .now, side: "Left" + " " + "Right", timeLeft: .now, timeRight: .now, wasBottleFed: false, wasNursed: true))
+    FeedingRecordCell(feedingRecord: FeedingRecord(date: .now, timeNursed: .now, timeLeft: .now, timeRight: .now, oz: 10.1, wasBottleFed: false))
 }
