@@ -9,15 +9,15 @@ import SwiftUI
 
 struct FeedingLog: View {
     
-    var feedingLog: [FeedingRecord] = []
+    var feedingLog: [FeedingRecord]
     
     var body: some View {
         NavigationStack {
             List {
                 ForEach(feedingLog, id: \.self) { feedingRecord in
-                    HStack {
-                        Text("")
-                    }
+                    FeedingRecordCell(feedingRecord: feedingRecord)
+                        .listRowInsets(EdgeInsets())
+                        .padding(12)
                 }
             }
             .navigationTitle("Feeding Log")
@@ -37,5 +37,18 @@ struct FeedingLog: View {
 }
 
 #Preview {
-    FeedingLog()
+    FeedingLog(feedingLog: [FeedingRecord(date: .now,
+                                             timeNursed: Date.now.addingTimeInterval(20*60),
+                                             timeLeft: Date.now.addingTimeInterval(20*60),
+                                             wasBottleFed: false),
+                               FeedingRecord(date: .now,
+                                             timeNursed: Date.now.addingTimeInterval(42*60),
+                                             timeLeft: Date.now.addingTimeInterval(22*60),
+                                             timeRight: Date.now.addingTimeInterval(20*60),
+                                             wasBottleFed: false),
+                               FeedingRecord(date: .now,
+                                             timeNursed: Date.now.addingTimeInterval(20*60),
+                                             oz: 4.2,
+                                             wasBottleFed: true)
+])
 }
