@@ -10,7 +10,6 @@ import SwiftUI
 struct StopwatchUnit: View {
     
     var timeUnit: Int
-    var timeUnitText: String
     var color: Color
     var timeUnitStr: String {
         let timeUnitStr = String(timeUnit)
@@ -19,16 +18,14 @@ struct StopwatchUnit: View {
     
     var body: some View {
         VStack {
-            HStack {
+            HStack(spacing: 2) {
                 Text(timeUnitStr.substring(index: 0))
                 Text(timeUnitStr.substring(index: 1))
             }
-            Text(timeUnitText)
-                .font(.system(size: 16))
         }
     }
 }
 
 #Preview {
-    StopwatchUnit(timeUnit: 0, timeUnitText: "MIN", color: .black)
+    StopwatchUnit(timeUnit: 0, color: .black)
 }
